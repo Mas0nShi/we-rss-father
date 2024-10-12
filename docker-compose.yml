@@ -1,0 +1,18 @@
+version: '3'
+services:
+  wechat2rss:
+    container_name: wechat2rss
+    build: .
+    environment:
+      - LIC_EMAIL=i@xlab.app # 付款时备注的邮箱
+      - LIC_CODE=xxxx # 激活码
+      - RSS_HOST=192.168.11.22:8080 # 服务器地址
+    volumes:
+      - ./data:/wechat2rss # 数据持久化保存
+    ports:
+      - "8080:8080" # 监听端口映射，例如修改到8081端口，8081:8080
+    deploy: # 自动重启策略
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 10s
